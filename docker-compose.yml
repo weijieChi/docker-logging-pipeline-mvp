@@ -1,0 +1,9 @@
+services:
+  node-js:
+   build: ./node-js
+   ports:
+     - "5000:5000"
+  
+  loki:
+    image: grafana/loki:2.9.0
+    ports: "3100:3100"
