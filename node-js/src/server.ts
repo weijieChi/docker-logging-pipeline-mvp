@@ -6,7 +6,7 @@ const PORT = process.env.PORT ? Number(process.env.PORT) : 5000;
 async function bootstrap() {
   const app = await createApp();
 
-  app.listen(PORT, () => {
+  app.listen(PORT, "0.0.0.0" , () => {
     logger.info(`server.start Node.js server started on port ${PORT}`, {
       service: "web",
       port: PORT,
