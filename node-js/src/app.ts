@@ -3,13 +3,11 @@ import { morganMiddleware } from "./middlewares/morgan.js";
 import { requestIdMiddleware } from "./middlewares/request-id.js";
 import { errorHandler } from "./middlewares/errorHandler.js";
 
-import type { Request, Response } from "express";
-
 export async function createApp() {
   const app = express();
 
   // ===== Middlewares =====
-  app.use(requestIdMiddleware); // request ID middleware ，必須放在 morgan 之後，這樣 morgan 才能在日誌中使用 requestId
+  app.use(requestIdMiddleware); // request ID middleware
   app.use(express.json());
   app.use(morganMiddleware);
 
@@ -34,13 +32,6 @@ export async function createApp() {
     setTimeout(() => {
       res.json({ message: "slow response" });
     }, 500);
-    res.json({ message: "slow response" });
-  });
-
-  // ===== Error Handler（很重要）=====
-  app.use((err: unknown, req: Request, res: Response) => {
-    console.error(err); // 之後會換成 winston
-    res.status(500).json({ message: "Internal Server Error" });
   });
 
   // error handler
