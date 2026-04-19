@@ -8,3 +8,9 @@ services:
     image: grafana/loki:2.9.0
     ports:
       - "3100:3100"
+  promtail:
+    image: grafana/promtail:2.9.0
+    volumes:
+      -/var/lib/docker/container:/var/lib/docker/containers:ro
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yml
