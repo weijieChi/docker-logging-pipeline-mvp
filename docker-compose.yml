@@ -18,3 +18,12 @@ services:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
     command: -config.file=/etc/promtail/config.yaml
+
+  grafana:
+    image: grafana/grafana:10.4.2
+    ports:
+      - "3000:3000"
+    depends_on:
+      - loki
+    volumes:
+      - ./grafana/provisioning:/etc/grafana/provisioning
