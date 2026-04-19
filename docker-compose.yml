@@ -1,9 +1,9 @@
 services:
   node-js:
-   build: ./node-js
-   ports:
-     - "5000:5000"
-  
+    build: ./node-js
+    ports:
+      - "5000:5000"
+
   loki:
     image: grafana/loki:2.9.0
     ports:
@@ -16,5 +16,5 @@ services:
     image: grafana/promtail:2.9.0
     volumes:
       - /var/lib/docker/containers:/var/lib/docker/containers:ro
-      - ./promtail/promtail-config.yaml:/etc/promtail/config.yml
-    command: -config.file=/etc/promtail/config.yml
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+    command: -config.file=/etc/promtail/config.yaml
