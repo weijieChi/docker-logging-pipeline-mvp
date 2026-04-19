@@ -8,9 +8,13 @@ services:
     image: grafana/loki:2.9.0
     ports:
       - "3100:3100"
+    # volumes: # 沒有 volume 時候資料會儲存於 loki 的 filesystem 內部，
+    #          # 但是一旦 container 重啟，資料就會消失，因為是 mvp 的設計，
+    #          # 所以並未掛載 volume
+    #   - loki-data:/loki # production 時候需要加上 volume 才能儲存資料
   promtail:
     image: grafana/promtail:2.9.0
     volumes:
-      - /var/lib/docker/container:/var/lib/docker/containers:ro
-      - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
+      - /var/lib/docker/containers:/var/lib/docker/containers:ro
+      - ./promtail/promtail-config.yaml:/etc/promtail/config.yml
     command: -config.file=/etc/promtail/config.yml
