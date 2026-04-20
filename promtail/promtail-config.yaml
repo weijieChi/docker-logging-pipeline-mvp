@@ -16,4 +16,4 @@ scrape_configs:
           job: docker
           __path__: /var/lib/docker/containers/*/*.log
     pipeline_stages: # structured logs
-      - docker: { log, stream, time }
+      - docker: {}
