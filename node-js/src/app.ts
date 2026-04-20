@@ -20,7 +20,7 @@ export async function createApp() {
     res.json({ message: "test log" });
   });
 
-  app.get("/app/error", (req, res) => {
+  app.get("/api/error", (req, res) => {
     throw new Error("test error");
   });
 
