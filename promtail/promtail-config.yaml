@@ -18,34 +18,34 @@ scrape_configs:
 
     pipeline_stages:
     # 先解析 docker JSON（必要）
-    - docker: {}
-
-      # Node.js JSON logs
-      # winston, morgan 已經做 jason 格式化處理
-      - match:
-        selector: '{job="nodejs"}'
-        stages:
-          - json:
+      - docker: {}
+  
+        # Node.js JSON logs
+        # winston, morgan 已經做 jason 格式化處理
+        - match:
+          selector: '{job="nodejs"}'
+          stages:
+            - json:
+                expressions:
+                  level:
+                  message:
+                  requestId:
+                  method:
+                  path:
+                  statusCode:
+        # 🟨 Loki / system → logfmt
+        - match:
+          selector: '{job="loki"}'
+          stages:
+            - logfmt: {}
+        
+        # docker logs
+        # fallback（其他 docker logs）
+        match:
+          selector: '{job="docker"}'
+          stages: 
+            - json:
               expressions:
                 level:
                 message:
                 requestId:
-                method:
-                path:
-                statusCode:
-      # 🟨 Loki / system → logfmt
-      - match:
-        selector: '{job="loki"}'
-        stages:
-          - logfmt: {}
-      
-      # docker logs
-      # fallback（其他 docker logs）
-      match:
-        selector: '{job="docker"}'
-        stages: 
-          - json:
-            expressions:
-              level:
-              message:
-              requestId:
