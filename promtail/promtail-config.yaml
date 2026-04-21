@@ -17,8 +17,22 @@ scrape_configs:
           __path__: /var/lib/docker/containers/*/*.log
     pipeline_stages: # structured logs
       - docker: {}
-      - logfmt:
-          mapping:
+
+      # JSON logs（你的 Node.js）
+      # winston, morgan 已經做 jason 格式化處理
+      - match:
+        selector: '{job="nodejs"}'
+        stages:
+          -json:
+            expression:
             level:
-            ts:
-            msg:
+            message:
+            requestId:
+            method:
+            path:
+            statusCode:
+      # 🟨 Loki / system → logfmt
+      - match:
+        selector: '{job="loki"}'
+        stages:
+          - logfmt: {}

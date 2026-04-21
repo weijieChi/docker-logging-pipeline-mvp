@@ -6,6 +6,9 @@ services:
 
   loki:
     image: grafana/loki:2.9.0
+    labels:
+      - "logging=promtail"
+      - "job=loki"
     ports:
       - "3100:3100"
     # volumes: # 沒有 volume 時候資料會儲存於 loki 的 filesystem 內部，
