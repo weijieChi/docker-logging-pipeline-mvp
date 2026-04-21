@@ -40,3 +40,13 @@ scrape_configs:
         selector: '{job="loki"}'
         stages:
           - logfmt: {}
+      
+      # docker logs
+      match:
+        selector: '{job="docker"}'
+        stages: 
+          - json:
+            expressions:
+              level:
+              message:
+              requestId:
