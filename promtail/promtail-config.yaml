@@ -22,7 +22,7 @@ scrape_configs:
   
         # Node.js JSON logs
         # winston, morgan 已經做 jason 格式化處理
-        - match:
+      - match:
           selector: '{job="nodejs"}'
           stages:
             - json:
@@ -32,20 +32,20 @@ scrape_configs:
                   requestId:
                   method:
                   path:
-                  statusCode:
+                  statusCode
         # 🟨 Loki / system → logfmt
-        - match:
+      - match:
           selector: '{job="loki"}'
           stages:
             - logfmt: {}
         
         # docker logs
         # fallback（其他 docker logs）
-        match:
+      - match:
           selector: '{job="docker"}'
-          stages: 
+          stages:
             - json:
-              expressions:
-                level:
-                message:
-                requestId:
+                expressions:
+                  level:
+                  message:
+                  requestId
