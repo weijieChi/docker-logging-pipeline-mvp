@@ -11,5 +11,9 @@ export const logger = winston.createLogger({
   defaultMeta: {
     service: "web",
   },
-  transports: [new winston.transports.Console()],
+  transports: [
+    new winston.transports.Console({
+      format: winston.format.json(), // ⭐ 關鍵 for Grafana
+    }),
+  ],
 });
