@@ -38,7 +38,7 @@ scrape_configs:
           selector: '{job="loki"}'
           stages:
             - logfmt: {}
-        
+
         # docker logs
         # fallback（其他 docker logs）
       - match:
