@@ -27,25 +27,24 @@ scrape_configs:
           stages:
             - json:
                 expressions:
-                  level:
-                  message:
-                  requestId:
-                  method:
-                  path:
-                  statusCode
+                  level: level
+                  message: message
+                  requestId: requestId
+                  method: method
+                  path: path
+                  statusCode: statusCode
         # 🟨 Loki / system → logfmt
       - match:
           selector: '{job="loki"}'
           stages:
             - logfmt: {}
 
-        # docker logs
-        # fallback（其他 docker logs）
+      # fallback（其他 docker logs）
       - match:
           selector: '{job="docker"}'
           stages:
             - json:
                 expressions:
-                  level:
-                  message:
-                  requestId
+                  level: level
+                  message: message
+                  requestId: requestId
