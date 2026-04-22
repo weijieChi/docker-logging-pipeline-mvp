@@ -40,11 +40,11 @@ scrape_configs:
                   statusCode: statusCode
                   ip: ip
 
-              - labels:
-                  level:
-                  method:
-                  statusCode:
-                  ip:
+            - labels:
+                level:
+                method:
+                statusCode:
+                ip:
 
       # 3️⃣ Loki logs（logfmt）👉 這段我幫你修好
       - match:
