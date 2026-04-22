@@ -20,7 +20,7 @@ services:
     #          # 所以並未掛載 volume
     #   - loki-data:/loki # production 時候需要加上 volume 才能儲存資料
   promtail:
-    image: grafana/promtail:3
+    image: grafana/promtail:latest
       - ./promtail/promtail-config.yaml:/etc/promtail/config.yaml
       - /var/run/docker.sock:/var/run/docker.sock
     command: -config.file=/etc/promtail/config.yaml
