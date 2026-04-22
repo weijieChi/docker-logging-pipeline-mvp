@@ -6,8 +6,6 @@ import type { Request, Response } from "express";
 export const morganMiddleware = morgan(
   (tokens, req: Request, res: Response) => {
     return JSON.stringify({
-      level: "info",
-      message: "HTTP request",
       method: tokens.method?.(req, res),
       path: tokens.url?.(req, res),
       statusCode: Number(tokens.status?.(req, res)),
@@ -18,7 +16,7 @@ export const morganMiddleware = morgan(
   {
     stream: {
       write: (message) => {
-        logger.info(JSON.parse(message));
+        logger.info("HTTP request", JSON.parse(message));
       },
     },
   },
