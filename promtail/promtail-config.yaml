@@ -14,20 +14,19 @@ scrape_configs:
       - host: unix:///var/run/docker.sock
 
     relabel_configs:
-      # 從 container label 拿 job（你 compose 要有 labels.job）
+      # 從 docker label 拿 job
       - source_labels: ['__meta_docker_container_label_job']
         target_label: job
 
-      # container 名稱（方便 Grafana 查）
+      # container name（方便查詢）
       - source_labels: ['__meta_docker_container_name']
         target_label: container
 
     pipeline_stages:
-      # 先解析 docker JSON（必要）
+      # 1️⃣ 解析 docker JSON
       - docker: {}
 
-      # Node.js JSON logs
-        # winston, morgan 已經做 jason 格式化處理
+      # 2️⃣ Node.js logs（JSON）
       - match:
           selector: '{job="nodejs"}'
           stages:
@@ -40,7 +39,7 @@ scrape_configs:
                   path: path
                   statusCode: statusCode
 
-      # 🟨 Loki / system → logfmt
+      # 3️⃣ Loki logs（logfmt）👉 這段我幫你修好
       - match:
           selector: '{job="loki"}'
           stages:
@@ -50,7 +49,7 @@ scrape_configs:
                   ts: ts
                   msg: msg
 
-      # fallback（其他 docker logs）
+      # 4️⃣ fallback（其他）
       - match:
           selector: '{job="docker"}'
           stages:
